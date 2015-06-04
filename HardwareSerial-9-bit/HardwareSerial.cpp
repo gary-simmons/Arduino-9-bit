@@ -360,7 +360,7 @@ try_again:
   // set the 9 bit character size if required
   if (_use9Bits)
     sbi(*_ucsrb, _ucsz2);
-  else 
+  else
     cbi(*_ucsrb, _ucsz2);
 }
 
