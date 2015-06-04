@@ -60,8 +60,7 @@ private:
   uint16_t _tx_delay;
 
   uint16_t _buffer_overflow:1;
-  uint16_t _inverse_logic_rx:1;
-  uint16_t _inverse_logic_tx:1;
+  uint16_t _inverse_logic:1;
 
   // static data
   static char _receive_buffer[_SS_MAX_RX_BUFF]; 
@@ -81,7 +80,7 @@ private:
 
 public:
   // public methods
-  SoftwareSerial(uint8_t receivePin, uint8_t transmitPin, bool inverse_logic_rx = false, bool inverse_logic_tx = false);
+  SoftwareSerial(uint8_t receivePin, uint8_t transmitPin, bool inverse_logic = false);
   ~SoftwareSerial();
   void begin(long speed);
   bool listen();
@@ -90,7 +89,10 @@ public:
   bool overflow() { bool ret = _buffer_overflow; _buffer_overflow = false; return ret; }
   int peek();
 
-  virtual size_t write(uint16_t byte);
+  size_t writeAll(uint8_t b[], int size);
+  size_t writeModeBitOn(uint8_t byte);
+  size_t writeModeBitOff(uint8_t byte);
+  virtual size_t write(uint8_t byte);
   virtual int read();
   virtual int available();
   virtual void flush();
